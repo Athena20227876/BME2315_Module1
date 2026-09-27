@@ -1,3 +1,5 @@
+import csv
+
 from makayla_patient import * # import code from makayla_patient.py file
 
 Patient.instantiate_from_csv("C:/Users/makay/OneDrive - University of Virginia/BME 2315/Module 1/Metadata and Protein Data for Module 1.csv") # instantiate Patient objects from the .csv file
@@ -7,6 +9,11 @@ import matplotlib.pyplot as plt # imports package for plotting data on a graph
 from scipy import stats # imports package that statistically analyzes data
 import numpy as np # imports package allowing mathematical operations with the data
 import statistics # imports package that statistically analyzes data
+
+try:
+    from sklearn.linear_model import LinearRegression
+except ModuleNotFoundError:
+    LinearRegression = None
 
 # open the .csv file and print the headers
 with open("C:/Users/makay/OneDrive - University of Virginia/BME 2315/Module 1/Metadata and Protein Data for Module 1.csv", newline="") as f: # opens the .csv file
@@ -37,7 +44,6 @@ for patient in Patient.all_patients: # print the patient data in order of age at
       print(patient)
 
 Patient.all_patients.sort(key=Patient.get_Amyloid_Beta42_levels, reverse=False)
-
 
 # creating a box graph for data visualization of Amyloid-Beta42 levels by sex
 f_ABeta42 = []
@@ -76,6 +82,9 @@ plt.title("Amyloid-Beta42 Levels by Sex")
 
 plt.show() # displays final graph
 
+f_stat, p_value = stats.f_oneway(f_ABeta42, m_ABeta42) # performs a one-way ANOVA test to determine if there is a significant difference between the two data sets
+print(f"F-statistic: {f_stat}, P-value: {p_value}")
+
 # creating a scatter plot for data visualization of Amyloid-Beta42 levels vs. age at death
 patient.age_at_death
 patient.Amyloid_Beta42_levels
@@ -95,5 +104,18 @@ plt.scatter(age_at_death, ABeta42_values) # clarifying the type of graph being u
 plt.xlabel("Age at Death")
 plt.ylabel("Amyloid-Beta42 (pg/ug)")
 plt.title("Amyloid-Beta42 vs. Age at Death")
+
+if LinearRegression is not None:
+      age_at_death = np.array(age_at_death).reshape(-1, 1)
+      ABeta42_values = np.array(ABeta42_values)
+
+      model = LinearRegression()
+      model.fit(age_at_death, ABeta42_values)
+      line_ages = np.linspace(age_at_death.min(), age_at_death.max(), 100).reshape(-1, 1)
+      line_values = model.predict(line_ages)
+      plt.plot(line_ages, line_values, color="red", label="Linear regression")
+      plt.legend()
+      print(f"Regression slope: {model.coef_[0]}")
+      print(f"Regression intercept: {model.intercept_}")
 
 plt.show() # displays final scatterplot graph
