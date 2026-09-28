@@ -1,6 +1,6 @@
 # Name: Vincent LaGrua
 # Final Project: pTAU, cognition (MMSE), and APOE e4 in Alzheimer's disease donors
-# Resources: Claude - I used Claude to help build the final project graphs and
+# Resources: Claude Opus - used to help build the final project graphs and
 # statistical analysis, and to review my code for errors and consistency.
 
 '''
