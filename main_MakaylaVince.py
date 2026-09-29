@@ -1,4 +1,4 @@
-# Name: Vincent LaGrua
+# Name: Vincent LaGrua and Makayla Bateman
 # Final Project: pTAU, cognition (MMSE), and APOE e4 in Alzheimer's disease donors
 # Resources: Claude Opus - used to help build the final project graphs and
 # statistical analysis, and to review my code for errors and consistency.
@@ -26,10 +26,10 @@ from sklearn.linear_model import LinearRegression
 
 
 # ===== Section 1: Loading the patient data =====
-# CREATE one Patient object per row of the CSV (only load the file once)
+# Create one Patient object per row of the CSV (only load the file once)
 Patient.instantiate_from_csv("C:\\Users\\vince\\OneDrive\\BME2315\\Module 1\\BME2315_Module1\\Metadata and Protein Data for Module 1.csv")
 
-# CHECK that all patients loaded
+# Check that all patients loaded
 print(f"Number of patients = {len(Patient.all_patients)}")   # should be 84
 print(Patient.all_patients[0])
 
